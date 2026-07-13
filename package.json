@@ -1,0 +1,14 @@
+{
+  "name": "pilotparts",
+  "version": "1.0.0",
+  "description": "Aviation parts e-commerce demo app",
+  "scripts": {
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "seed": "node server/db/seed.js",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "start": "npm run seed && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  }
+}
