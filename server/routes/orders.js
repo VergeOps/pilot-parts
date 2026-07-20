@@ -1,5 +1,7 @@
 const express= require('express');      const router =express.Router(); const db= require('../db/db');
 
+const TAX_RATE = 0.07;
+
 
 
 
@@ -34,15 +36,16 @@ router.post('/',(req,res)=> {try {
 );}
 
 
- const total=cartItems.reduce((sum,item)=>
+ const subtotal=cartItems.reduce((sum,item)=>
 sum+item.price*item.quantity,0);
 
-
+const tax=Math.round(subtotal*TAX_RATE*100)/100;
+const total=subtotal+tax;
 
 const createOrder=db.transaction(()=>{
       const orderResult=db
- .prepare('INSERT INTO orders (user_id, total, shipping_address) VALUES (?, ?, ?)')
-             .run(userId,total,JSON.stringify(shippingAddress));
+ .prepare('INSERT INTO orders (user_id, subtotal, tax, total, shipping_address) VALUES (?, ?, ?, ?, ?)')
+             .run(userId,subtotal,tax,total,JSON.stringify(shippingAddress));
 
 const orderId=orderResult.lastInsertRowid; const insertItem = db.prepare(
 'INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES (?, ?, ?, ?)'); for(const item of cartItems)

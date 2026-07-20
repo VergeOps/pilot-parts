@@ -83,6 +83,14 @@ export default function OrderDetailPage() {
             </tbody>
             <tfoot>
               <tr>
+                <td colSpan={4} style={{ padding: '8px 10px', textAlign: 'right' }}>Subtotal:</td>
+                <td style={{ padding: '8px 10px' }}>${order.subtotal.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colSpan={4} style={{ padding: '8px 10px', textAlign: 'right' }}>Tax (7%):</td>
+                <td style={{ padding: '8px 10px' }}>${order.tax.toFixed(2)}</td>
+              </tr>
+              <tr>
                 <td colSpan={4} style={{ padding: '8px 10px', fontWeight: 'bold', textAlign: 'right' }}>Total:</td>
                 <td style={{ padding: '8px 10px', fontWeight: 'bold', color: 'var(--color-primary)' }}>${order.total.toFixed(2)}</td>
               </tr>

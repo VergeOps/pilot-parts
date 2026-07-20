@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { calculateTax } from '../utils/tax';
 
 export default function CartPage() {
   const { items, updateQty, removeItem } = useCart();
@@ -9,6 +10,8 @@ export default function CartPage() {
   const navigate = useNavigate();
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = calculateTax(subtotal);
+  const total = subtotal + tax;
 
   if (!user) {
     return (
@@ -105,9 +108,13 @@ export default function CartPage() {
                 <span>Shipping</span>
                 <span style={{ color: 'var(--color-text-muted)' }}>Calculated at checkout</span>
               </div>
+              <div className="cart-summary-row">
+                <span>Tax (7%)</span>
+                <span>${tax.toFixed(2)}</span>
+              </div>
               <div className="cart-summary-row cart-summary-total">
                 <span>Order Total</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>${total.toFixed(2)}</span>
               </div>
               <button
                 className="btn btn-primary"

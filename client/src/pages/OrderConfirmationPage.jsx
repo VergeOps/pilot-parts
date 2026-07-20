@@ -55,6 +55,14 @@ export default function OrderConfirmationPage() {
             </tbody>
             <tfoot>
               <tr>
+                <td colSpan={2} style={{ padding: '8px', textAlign: 'right' }}>Subtotal:</td>
+                <td style={{ padding: '8px' }}>${order.subtotal.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ padding: '8px', textAlign: 'right' }}>Tax (7%):</td>
+                <td style={{ padding: '8px' }}>${order.tax.toFixed(2)}</td>
+              </tr>
+              <tr>
                 <td colSpan={2} style={{ padding: '8px', fontWeight: 'bold', textAlign: 'right' }}>Order Total:</td>
                 <td style={{ padding: '8px', fontWeight: 'bold', color: 'var(--color-primary)' }}>${order.total.toFixed(2)}</td>
               </tr>

@@ -25,6 +25,8 @@ function initSchema() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER REFERENCES users(id),
       status TEXT DEFAULT 'pending',
+      subtotal REAL NOT NULL DEFAULT 0,
+      tax REAL NOT NULL DEFAULT 0,
       total REAL NOT NULL,
       created_at TEXT DEFAULT (datetime('now')),
       shipping_address TEXT NOT NULL
@@ -45,6 +47,16 @@ function initSchema() {
       quantity INTEGER NOT NULL DEFAULT 1
     );
   `);
+
+  // Existing databases created before tax support was added won't have these
+  // columns yet, since CREATE TABLE IF NOT EXISTS doesn't alter existing tables.
+  const orderColumns = db.prepare("PRAGMA table_info(orders)").all().map(c => c.name);
+  if (!orderColumns.includes('subtotal')) {
+    db.exec('ALTER TABLE orders ADD COLUMN subtotal REAL NOT NULL DEFAULT 0');
+  }
+  if (!orderColumns.includes('tax')) {
+    db.exec('ALTER TABLE orders ADD COLUMN tax REAL NOT NULL DEFAULT 0');
+  }
 }
 
 module.exports = { initSchema };

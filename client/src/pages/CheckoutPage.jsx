@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
+import { calculateTax } from '../utils/tax';
 
 const US_STATES = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
 
@@ -33,6 +34,8 @@ export default function CheckoutPage() {
   const [apiError, setApiError] = useState('');
 
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tax = calculateTax(subtotal);
+  const total = subtotal + tax;
 
   function set(field) {
     return e => setFields(f => ({ ...f, [field]: e.target.value }));
@@ -185,7 +188,7 @@ export default function CheckoutPage() {
 
                 {apiError && <div className="alert alert-error">{apiError}</div>}
                 <button type="submit" className="btn btn-primary" disabled={submitting} style={{ minWidth: 180 }}>
-                  {submitting ? 'Placing Order...' : `Place Order — $${subtotal.toFixed(2)}`}
+                  {submitting ? 'Placing Order...' : `Place Order — $${total.toFixed(2)}`}
                 </button>
               </div>
 
@@ -198,9 +201,17 @@ export default function CheckoutPage() {
                       <span>${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
                   ))}
+                  <div className="order-summary-item">
+                    <span>Subtotal</span>
+                    <span>${subtotal.toFixed(2)}</span>
+                  </div>
+                  <div className="order-summary-item">
+                    <span>Tax (7%)</span>
+                    <span>${tax.toFixed(2)}</span>
+                  </div>
                   <div className="order-summary-total">
                     <span>Total</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>${total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
