@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(node server/db/seed.js)",
+      "Bash(node server/index.js)",
+      "Bash(curl -s http://localhost:3001/api/products)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Products: {len\\(d[\\\\\"products\\\\\"]\\)}'\\)\")",
+      "Bash(curl -s -X POST http://localhost:3001/api/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"alice@example.com\",\"password\":\"password123\"}')",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Login: {d[\\\\\"user\\\\\"][\\\\\"name\\\\\"]}'\\)\")",
+      "Bash(kill %1)",
+      "Bash(curl -s -X POST http://localhost:3001/api/cart -H \"Content-Type: application/json\" -H \"X-User-Id: 1\" -d '{\"productId\":1,\"quantity\":2}')",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Cart items: {len\\(d[\\\\\"items\\\\\"]\\)}, qty: {d[\\\\\"items\\\\\"][0][\\\\\"quantity\\\\\"]}'\\)\")",
+      "Bash(curl -s -X POST http://localhost:3001/api/orders -H \"Content-Type: application/json\" -H \"X-User-Id: 1\" -d '{\"shippingAddress\":{\"fullName\":\"Alice Pilot\",\"address1\":\"123 Runway Rd\",\"city\":\"Oshkosh\",\"state\":\"WI\",\"zip\":\"54901\",\"country\":\"USA\"}}')",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Order placed: #{d[\\\\\"orderId\\\\\"]}'\\)\")",
+      "Bash(curl -s http://localhost:3001/api/cart -H \"X-User-Id: 1\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Cart after order: {len\\(d[\\\\\"items\\\\\"]\\)} items'\\)\")",
+      "Bash(python3 -)",
+      "Bash(python3 \"/private/tmp/claude-501/-Users-tsolley-Library-CloudStorage-GoogleDrive-tsolley-vergeops-com-My-Drive-Clients-BeyondTrust-2-Project-Code/8f5a031b-584e-42d9-b703-bdd83189738b/scratchpad/fetch_images.py\" AV-001 AV-002 PS-001)",
+      "Bash(python3 \"/private/tmp/claude-501/-Users-tsolley-Library-CloudStorage-GoogleDrive-tsolley-vergeops-com-My-Drive-Clients-BeyondTrust-2-Project-Code/8f5a031b-584e-42d9-b703-bdd83189738b/scratchpad/fetch_images.py\")",
+      "Bash(perl -pi -e 's|https://placehold\\\\.co/300x300\\\\?text=\\([A-Z]{2}-\\\\d{3}\\)|/images/products/$1.jpg|g; s|/images/products/SF-001\\\\.jpg|/images/products/SF-001.png|g' server/db/seed.js)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}
